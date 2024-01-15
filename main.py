@@ -58,7 +58,7 @@ async def inline_handlers(_, inline: InlineQuery):
         )
     elif search_ts.startswith("!pb"):
         query = search_ts.split(" ", 1)[-1]
-        if (query == "") or (query == " "):
+        if query in ["", " "]:
             answers.append(
                 InlineQueryResultArticle(
                     title="!pb [text]",
@@ -85,29 +85,37 @@ async def inline_handlers(_, inline: InlineQuery):
                     )
                 )
             else:
-                for i in range(len(torrentList)):
-                    answers.append(
-                        InlineQueryResultArticle(
-                            title=f"{torrentList[i]['Name']}",
-                            description=f"Seeders: {torrentList[i]['Seeders']}, Leechers: {torrentList[i]['Leechers']}\nSize: {torrentList[i]['Size']}",
-                            input_message_content=InputTextMessageContent(
-                                message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
-                                             f"**Name:** `{torrentList[i]['Seeders']}`\n"
-                                             f"**Size:** `{torrentList[i]['Size']}`\n"
-                                             f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
-                                             f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
-                                             f"**Uploader:** `{torrentList[i]['Uploader']}`\n"
-                                             f"**Uploaded on {torrentList[i]['Date']}**\n\n"
-                                             f"**Magnet:**\n`{torrentList[i]['Magnet']}`\n\nPowered By @AHToolsBot",
-                                parse_mode="Markdown"
-                            ),
-                            reply_markup=InlineKeyboardMarkup(
-                                [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!pb ")]])
-                        )
+                answers.extend(
+                    InlineQueryResultArticle(
+                        title=f"{torrentList[i]['Name']}",
+                        description=f"Seeders: {torrentList[i]['Seeders']}, Leechers: {torrentList[i]['Leechers']}\nSize: {torrentList[i]['Size']}",
+                        input_message_content=InputTextMessageContent(
+                            message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
+                            f"**Name:** `{torrentList[i]['Seeders']}`\n"
+                            f"**Size:** `{torrentList[i]['Size']}`\n"
+                            f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
+                            f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
+                            f"**Uploader:** `{torrentList[i]['Uploader']}`\n"
+                            f"**Uploaded on {torrentList[i]['Date']}**\n\n"
+                            f"**Magnet:**\n`{torrentList[i]['Magnet']}`\n\nPowered By @AHToolsBot",
+                            parse_mode="Markdown",
+                        ),
+                        reply_markup=InlineKeyboardMarkup(
+                            [
+                                [
+                                    InlineKeyboardButton(
+                                        "Search Again",
+                                        switch_inline_query_current_chat="!pb ",
+                                    )
+                                ]
+                            ]
+                        ),
                     )
+                    for i in range(len(torrentList))
+                )
     elif search_ts.startswith("!yts"):
         query = search_ts.split(" ", 1)[-1]
-        if (query == "") or (query == " "):
+        if query in ["", " "]:
             answers.append(
                 InlineQueryResultArticle(
                     title="!yts [text]",
@@ -160,7 +168,7 @@ async def inline_handlers(_, inline: InlineQuery):
                     )
     elif search_ts.startswith("!a"):
         query = search_ts.split(" ", 1)[-1]
-        if (query == "") or (query == " "):
+        if query in ["", " "]:
             answers.append(
                 InlineQueryResultArticle(
                     title="!a [text]",
@@ -189,26 +197,33 @@ async def inline_handlers(_, inline: InlineQuery):
                     )
                 )
             else:
-                for i in range(len(torrentList)):
-                    answers.append(
-                        InlineQueryResultArticle(
-                            title=f"{torrentList[i]['Name']}",
-                            description=f"Seeders: {torrentList[i]['Seeder']}, Leechers: {torrentList[i]['Leecher']}\nSize: {torrentList[i]['Size']}",
-                            input_message_content=InputTextMessageContent(
-                                message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
-                                             f"**Name:** `{torrentList[i]['Name']}`\n"
-                                             f"**Seeders:** `{torrentList[i]['Seeder']}`\n"
-                                             f"**Leechers:** `{torrentList[i]['Leecher']}`\n"
-                                             f"**Size:** `{torrentList[i]['Size']}`\n"
-                                             f"**Upload Date:** `{torrentList[i]['Date']}`\n\n"
-                                             f"**Magnet:** \n`{torrentList[i]['Magnet']}`\n\nPowered By @AHToolsBot",
-                                parse_mode="Markdown"
-                            ),
-                            reply_markup=InlineKeyboardMarkup(
-                                [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="!a ")]]
-                            )
-                        )
+                answers.extend(
+                    InlineQueryResultArticle(
+                        title=f"{torrentList[i]['Name']}",
+                        description=f"Seeders: {torrentList[i]['Seeder']}, Leechers: {torrentList[i]['Leecher']}\nSize: {torrentList[i]['Size']}",
+                        input_message_content=InputTextMessageContent(
+                            message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
+                            f"**Name:** `{torrentList[i]['Name']}`\n"
+                            f"**Seeders:** `{torrentList[i]['Seeder']}`\n"
+                            f"**Leechers:** `{torrentList[i]['Leecher']}`\n"
+                            f"**Size:** `{torrentList[i]['Size']}`\n"
+                            f"**Upload Date:** `{torrentList[i]['Date']}`\n\n"
+                            f"**Magnet:** \n`{torrentList[i]['Magnet']}`\n\nPowered By @AHToolsBot",
+                            parse_mode="Markdown",
+                        ),
+                        reply_markup=InlineKeyboardMarkup(
+                            [
+                                [
+                                    InlineKeyboardButton(
+                                        "Search Again",
+                                        switch_inline_query_current_chat="!a ",
+                                    )
+                                ]
+                            ]
+                        ),
                     )
+                    for i in range(len(torrentList))
+                )
     else:
         torrentList = await Search1337x(search_ts)
         if not torrentList:
@@ -225,31 +240,38 @@ async def inline_handlers(_, inline: InlineQuery):
                 )
             )
         else:
-            for i in range(len(torrentList)):
-                answers.append(
-                    InlineQueryResultArticle(
-                        title=f"{torrentList[i]['Name']}",
-                        description=f"Seeders: {torrentList[i]['Seeders']}, Leechers: {torrentList[i]['Leechers']}\nSize: {torrentList[i]['Size']}, Downloads: {torrentList[i]['Downloads']}",
-                        input_message_content=InputTextMessageContent(
-                            message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
-                                         f"**Name:** `{torrentList[i]['Name']}`\n"
-                                         f"**Language:** `{torrentList[i]['Language']}`\n"
-                                         f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
-                                         f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
-                                         f"**Size:** `{torrentList[i]['Size']}`\n"
-                                         f"**Downloads:** `{torrentList[i]['Downloads']}`\n"
-                                         f"__Uploaded by {torrentList[i]['UploadedBy']}__\n"
-                                         f"__Uploaded {torrentList[i]['DateUploaded']}__\n"
-                                         f"__Last Checked {torrentList[i]['LastChecked']}__\n\n"
-                                         f"**Magnet:**\n`{torrentList[i]['Magnet']}`\n\nPowered By @AHToolsBot",
-                            parse_mode="Markdown"
-                        ),
-                        reply_markup=InlineKeyboardMarkup(
-                            [[InlineKeyboardButton("Search Again", switch_inline_query_current_chat="")]]
-                        ),
-                        thumb_url=torrentList[i]['Poster']
-                    )
+            answers.extend(
+                InlineQueryResultArticle(
+                    title=f"{torrentList[i]['Name']}",
+                    description=f"Seeders: {torrentList[i]['Seeders']}, Leechers: {torrentList[i]['Leechers']}\nSize: {torrentList[i]['Size']}, Downloads: {torrentList[i]['Downloads']}",
+                    input_message_content=InputTextMessageContent(
+                        message_text=f"**Category:** `{torrentList[i]['Category']}`\n"
+                        f"**Name:** `{torrentList[i]['Name']}`\n"
+                        f"**Language:** `{torrentList[i]['Language']}`\n"
+                        f"**Seeders:** `{torrentList[i]['Seeders']}`\n"
+                        f"**Leechers:** `{torrentList[i]['Leechers']}`\n"
+                        f"**Size:** `{torrentList[i]['Size']}`\n"
+                        f"**Downloads:** `{torrentList[i]['Downloads']}`\n"
+                        f"__Uploaded by {torrentList[i]['UploadedBy']}__\n"
+                        f"__Uploaded {torrentList[i]['DateUploaded']}__\n"
+                        f"__Last Checked {torrentList[i]['LastChecked']}__\n\n"
+                        f"**Magnet:**\n`{torrentList[i]['Magnet']}`\n\nPowered By @AHToolsBot",
+                        parse_mode="Markdown",
+                    ),
+                    reply_markup=InlineKeyboardMarkup(
+                        [
+                            [
+                                InlineKeyboardButton(
+                                    "Search Again",
+                                    switch_inline_query_current_chat="",
+                                )
+                            ]
+                        ]
+                    ),
+                    thumb_url=torrentList[i]['Poster'],
                 )
+                for i in range(len(torrentList))
+            )
     try:
         await inline.answer(
             results=answers,
